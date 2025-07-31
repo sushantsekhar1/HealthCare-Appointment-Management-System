@@ -1,39 +1,50 @@
 import React from 'react'
 import { assets } from '../assets/assets'
 
+import lightlogo from '../assets/lightlogo.png'
+
 const Footer = () => {
   return (
     <div className='md:mx-10'>
       <div className='flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10  mt-40 text-sm'>
 
         <div>
-          <img className='mb-5 w-40' src={assets.logo} alt="" />
-          <p className='w-full md:w-2/3 text-gray-600 leading-6'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+             <div onClick={() => navigate('/')} className='flex items-center gap-2 cursor-pointer'>
+               <img className='w-10' src={lightlogo} alt="Logo" />
+               <h1 className="text-2xl font-bold text-black dark:text-white flex items-center">
+                 Health
+                 <span className="ml-1 bg-gradient-to-r from-cyan-500 to-blue-500 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent group hover:animate-pulse transition duration-300">
+                   Mate
+                 </span>
+               </h1>
+             </div>
+            <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+              Empowering lives with seamless healthcare access. Your health, our priority.
+            </p>
         </div>
 
-        <div>
-          <p className='text-xl font-medium mb-5'>COMPANY</p>
-          <ul className='flex flex-col gap-2 text-gray-600'>
-            <li>Home</li>
-            <li>About us</li>
-            <li>Delivery</li>
-            <li>Privacy policy</li>
+        <div className='text-center'>
+          <h2 className="text-lg font-semibold mb-4">Company</h2>
+          <ul className="space-y-2 text-sm">
+            <a href="/"><li className="hover:text-blue-500 cursor-pointer">Home</li></a>
+            <a href="/about"><li className="hover:text-blue-500 cursor-pointer">About Us</li></a>
+            <a href="/contact"><li className="hover:text-blue-500 cursor-pointer">Contact Us</li></a>
+            <a href="#"> <li className="hover:text-blue-500 cursor-pointer">Privacy Policy</li></a>
           </ul>
         </div>
 
         <div>
-          <p className='text-xl font-medium mb-5'>GET IN TOUCH</p>
-          <ul className='flex flex-col gap-2 text-gray-600'>
-            <li>+1-212-456-7890</li>
-            <li>greatstackdev@gmail.com</li>
+          <h2 className="text-lg font-semibold mb-4">Get in Touch</h2>
+          <ul className="space-y-2 text-sm">
+            <li>📞 +91-123-786-3344</li>
+            <li>📧 healthmate@gmail.com</li>
           </ul>
         </div>
 
       </div>
 
-      <div>
-        <hr />
-        <p className='py-5 text-sm text-center'>Copyright 2024 @ Prescripto.com - All Right Reserved.</p>
+      <div className="mt-8 text-center border-t border-gray-300 dark:border-gray-700 pt-4 text-sm">
+        <p>&copy; 2025 HealthMate.com – All Rights Reserved.</p>
       </div>
 
     </div>
