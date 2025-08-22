@@ -1,57 +1,9 @@
-// import React from 'react'
-// import { assets } from '../assets/assets'
-
-// const About = () => {
-//   return (
-//     <div>
-
-//       <div className='text-center text-2xl pt-10 text-[#707070]'>
-//         <p>ABOUT <span className='text-gray-700 font-semibold'>US</span></p>
-//       </div>
-
-//       <div className='my-10 flex flex-col md:flex-row gap-12'>
-//         <img className='w-full md:max-w-[360px]' src={assets.about_image} alt="" />
-//         <div className='flex flex-col justify-center gap-6 md:w-2/4 text-sm text-gray-600'>
-//           <p>Welcome to HealthMate, your trusted partner in managing your healthcare needs conveniently and efficiently. At HealthMate, we understand the challenges individuals face when it comes to scheduling doctor appointments and managing their health records.</p>
-//           <p>HealthMate is committed to excellence in healthcare technology. We continuously strive to enhance our platform, integrating the latest advancements to improve user experience and deliver superior service. Whether you're booking your first appointment or managing ongoing care, HealthMate is here to support you every step of the way.</p>
-//           <b className='text-gray-800'>Our Vision</b>
-//           <p>Our vision at HealthMate is to create a seamless healthcare experience for every user. We aim to bridge the gap between patients and healthcare providers, making it easier for you to access the care you need, when you need it.</p>
-//         </div>
-//       </div>
-
-//       <div className='text-xl my-4'>
-//         <p>WHY  <span className='text-gray-700 font-semibold'>CHOOSE US</span></p>
-//       </div>
-
-//       <div className='flex flex-col md:flex-row mb-20'>
-//         <div className='border px-10 md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-primary hover:text-white transition-all duration-300 text-gray-600 cursor-pointer'>
-//           <b>EFFICIENCY:</b>
-//           <p>Streamlined appointment scheduling that fits into your busy lifestyle.</p>
-//         </div>
-//         <div className='border px-10 md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-primary hover:text-white transition-all duration-300 text-gray-600 cursor-pointer'>
-//           <b>CONVENIENCE: </b>
-//           <p>Access to a network of trusted healthcare professionals in your area.</p>
-//         </div>
-//         <div className='border px-10 md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-primary hover:text-white transition-all duration-300 text-gray-600 cursor-pointer'>
-//           <b>PERSONALIZATION:</b>
-//           <p >Tailored recommendations and reminders to help you stay on top of your health.</p>
-//         </div>
-//       </div>
-
-//     </div>
-//   )
-// }
-
-// export default About
-
-
-
 import React from 'react'
 import { assets } from '../assets/assets'
 
 const About = () => {
   return (
-    <div className="px-4 md:px-16 py-12 bg-[#f9fbff] text-gray-700">
+    <div className="px-4 md:px-16 py-12 text-gray-700">
       
       {/* Heading */}
       <div className="text-center text-3xl font-semibold mb-10 text-[#3d3d3d]">
@@ -61,7 +13,7 @@ const About = () => {
       {/* About Section */}
       <div className="flex flex-col md:flex-row items-center gap-12 mb-16">
         <img
-          className="w-full md:max-w-md rounded-xl shadow-md"
+          className="w-full max-w-md mx-auto rounded-lg shadow-md hover:scale-105 transition-transform duration-500 ease-in-out"
           src={assets.about_image}
           alt="About HealthMate"
         />
@@ -88,19 +40,19 @@ const About = () => {
 
       <div className="grid md:grid-cols-3 gap-6 text-sm">
         {/* Card 1 */}
-        <div className="border rounded-xl px-6 py-8 text-center hover:bg-gradient-to-r hover:from-blue-400 hover:to-purple-500 hover:text-white transition duration-300 shadow-sm cursor-pointer">
+        <div className="border rounded-xl px-6 py-8 text-center hover:bg-gradient-to-r hover:from-blue-300 hover:to-purple-300 hover:text-grey-400 transition duration-300 shadow-sm cursor-pointer">
           <h4 className="font-bold mb-2">EFFICIENCY</h4>
           <p>Streamlined appointment scheduling that fits into your busy lifestyle.</p>
         </div>
 
         {/* Card 2 */}
-        <div className="border rounded-xl px-6 py-8 text-center hover:bg-gradient-to-r hover:from-blue-400 hover:to-purple-500 hover:text-white transition duration-300 shadow-sm cursor-pointer">
+        <div className="border rounded-xl px-6 py-8 text-center hover:bg-gradient-to-r hover:from-blue-300 hover:to-purple-300 hover:text-grey-400 transition duration-300 shadow-sm cursor-pointer">
           <h4 className="font-bold mb-2">CONVENIENCE</h4>
           <p>Access to a network of trusted healthcare professionals in your area.</p>
         </div>
 
         {/* Card 3 */}
-        <div className="border rounded-xl px-6 py-8 text-center hover:bg-gradient-to-r hover:from-blue-400 hover:to-purple-500 hover:text-white transition duration-300 shadow-sm cursor-pointer">
+        <div className="border rounded-xl px-6 py-8 text-center hover:bg-gradient-to-r hover:from-blue-300 hover:to-purple-300 hover:text-grey-400 transition duration-300 shadow-sm cursor-pointer">
           <h4 className="font-bold mb-2">PERSONALIZATION</h4>
           <p>Tailored recommendations and reminders to help you stay on top of your health.</p>
         </div>
