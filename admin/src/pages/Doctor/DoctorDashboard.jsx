@@ -1,181 +1,95 @@
-import React, { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
-import { DoctorContext } from '../../context/DoctorContext';
-import { AppContext } from '../../context/AppContext';
-import { toast } from 'react-toastify';
+import React, { useContext, useEffect } from 'react'
+import { DoctorContext } from '../../context/DoctorContext'
+import { AppContext } from '../../context/AppContext'
+import { assets } from '../../assets/assets'
 
-const DoctorProfile = () => {
-  const { dToken, profileData, setProfileData, getProfileData } = useContext(DoctorContext);
-  const { currency, backendUrl } = useContext(AppContext);
-  const [isEdit, setIsEdit] = useState(false);
-
-  const updateProfile = async () => {
-    try {
-      const updateData = {
-        address: profileData.address,
-        fees: profileData.fees,
-        about: profileData.about,
-        available: profileData.available
-      };
-
-      const { data } = await axios.post(
-        `${backendUrl}/api/doctor/update-profile`,
-        updateData,
-        { headers: { dToken } }
-      );
-
-      if (data.success) {
-        toast.success(data.message);
-        setIsEdit(false);
-        getProfileData();
-      } else {
-        toast.error(data.message);
-      }
-    } catch (error) {
-      toast.error(error.message);
-      console.error(error);
-    }
-  };
+const DoctorDashboard = () => {
+  const { dToken, dashData, getDashData, cancelAppointment, completeAppointment } = useContext(DoctorContext)
+  const { slotDateFormat, currency } = useContext(AppContext)
 
   useEffect(() => {
-    if (dToken) getProfileData();
-  }, [dToken]);
+    if (dToken) getDashData()
+  }, [dToken])
 
-  return profileData && (
-    <div className="min-h-screen w-full  flex items-center justify-center px-4 py-8">
-      <div className="bg-white bg-gradient-to-tr from-white via-sky-50 to-indigo-50 border shadow-xl rounded-2xl max-w-3xl w-full p-8 flex flex-col items-center gap-6">
+  return dashData && (
+    <div className="m-4 sm:m-6 ">
 
-        {/* Doctor Image */}
-        <img
-          className="w-40 h-40 rounded-full border-4 border-white shadow-lg object-cover"
-          src={profileData.image}
-          alt="Doctor"
-        />
-
-        {/* Doctor Name and Specialization */}
-        <div className="text-center">
-          <h1 className="text-3xl font-bold text-4xl font-bold bg-gradient-to-r from-blue-700  to-blue-700 text-transparent bg-clip-text">{profileData.name}</h1>
-          <p className="text-sm text-gray-600 mt-1">{profileData.degree} — {profileData.speciality}</p>
-          <span className="text-xs mt-2 inline-block bg-gradient-to-r from-blue-300 to-purple-00 hover:from-blue-200 hover:to-purple-200 px-2 py-1 rounded-full border border-indigo-300">
-            {profileData.experience} years experience
-          </span>
+      {/* --- Overview Cards --- */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 ">
+        <div className="flex items-center gap-4 p-5 rounded-xl bg-gradient-to-br from-purple-100 via-pink-100 to-blue-100 shadow-md hover:scale-[1.02] transition">
+          <img className="w-14" src={assets.earning_icon} alt="" />
+          <div>
+            <p className="text-2xl font-bold text-gray-700">{currency} {dashData.earnings}</p>
+            <p className="text-sm text-gray-500">Total Earnings</p>
+          </div>
         </div>
 
-        {/* About Section */}
-        <div className="w-full">
-          <p className="font-semibold text-sm text-gray-700 mb-1">About:</p>
-          {
-            isEdit ? (
-              <textarea
-                rows={4}
-                className="w-full border rounded-lg p-2 focus:outline-indigo-400 text-sm"
-                value={profileData.about}
-                onChange={(e) =>
-                  setProfileData(prev => ({ ...prev, about: e.target.value }))
-                }
+        <div className="flex items-center gap-4 p-5 rounded-xl bg-gradient-to-br from-teal-100 via-cyan-100 to-blue-100 shadow-md hover:scale-[1.02] transition">
+          <img className="w-14" src={assets.appointments_icon} alt="" />
+          <div>
+            <p className="text-2xl font-bold text-gray-700">{dashData.appointments}</p>
+            <p className="text-sm text-gray-500">Appointments</p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-4 p-5 rounded-xl bg-gradient-to-br from-yellow-100 via-orange-100 to-pink-100 shadow-md hover:scale-[1.02] transition">
+          <img className="w-14" src={assets.patients_icon} alt="" />
+          <div>
+            <p className="text-2xl font-bold text-gray-700">{dashData.patients}</p>
+            <p className="text-sm text-gray-500">Patients</p>
+          </div>
+        </div>
+      </div>
+
+      {/* --- Latest Bookings Section --- */}
+      <div className="bg-white border rounded-xl overflow-hidden shadow-md bg-gradient-to-br from-white via-gray-50 to-indigo-50">
+        <div className="flex items-center gap-3 px-6 py-4 border-b bg-gradient-to-r from-blue-100 to-purple-100">
+          <img src={assets.list_icon} alt="" className="w-5 h-5" />
+          <p className="font-semibold text-gray-700 ">Latest Bookings</p>
+        </div>
+
+        <div className="divide-y">
+          {dashData.latestAppointments.slice(0, 5).map((item, index) => (
+            <div
+              key={index}
+              className="flex items-center px-6 py-4 gap-4 hover:bg-gray-50 transition-all hover:bg-indigo-50"
+            >
+              <img
+                className="rounded-full w-12 h-12 object-cover border border-gray-200"
+                src={item.userData.image}
+                alt={item.userData.name}
               />
-            ) : (
-              <p className="text-sm text-gray-600">{profileData.about}</p>
-            )
-          }
-        </div>
+              <div className="flex-1 text-sm">
+                <p className="text-gray-800 font-medium">{item.userData.name}</p>
+                <p className="text-gray-500">Booking on {slotDateFormat(item.slotDate)}</p>
+              </div>
 
-        {/* Fee */}
-        <div className="w-full text-sm text-gray-700">
-          <p className="font-semibold mb-1">Appointment Fee:</p>
-          {
-            isEdit ? (
-              <input
-                type="number"
-                className="border p-2 rounded w-full"
-                value={profileData.fees}
-                onChange={(e) =>
-                  setProfileData(prev => ({ ...prev, fees: e.target.value }))
-                }
-              />
-            ) : (
-              <p>{currency} {profileData.fees}</p>
-            )
-          }
-        </div>
-
-        {/* Address */}
-        <div className="w-full text-sm text-gray-700">
-          <p className="font-semibold mb-1">Address:</p>
-          {
-            isEdit ? (
-              <>
-                <input
-                  type="text"
-                  className="w-full mb-2 p-2 border rounded"
-                  value={profileData.address.line1}
-                  onChange={(e) =>
-                    setProfileData(prev => ({
-                      ...prev,
-                      address: { ...prev.address, line1: e.target.value }
-                    }))
-                  }
-                />
-                <input
-                  type="text"
-                  className="w-full p-2 border rounded"
-                  value={profileData.address.line2}
-                  onChange={(e) =>
-                    setProfileData(prev => ({
-                      ...prev,
-                      address: { ...prev.address, line2: e.target.value }
-                    }))
-                  }
-                />
-              </>
-            ) : (
-              <>
-                <p>{profileData.address.line1}</p>
-                <p>{profileData.address.line2}</p>
-              </>
-            )
-          }
-        </div>
-
-        {/* Availability */}
-        <div className="flex items-center gap-2 w-full text-sm text-gray-700">
-          <input
-            type="checkbox"
-            checked={profileData.available}
-            onChange={() =>
-              isEdit &&
-              setProfileData(prev => ({
-                ...prev,
-                available: !prev.available
-              }))
-            }
-          />
-          <label>Available</label>
-        </div>
-
-        {/* Action Button */}
-        <div className="w-full flex justify-center mt-4">
-          {
-            isEdit ? (
-              <button
-                onClick={updateProfile}
-                className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white px-6 py-2 rounded-full hover:bg-indigo-700 transition"
-              >
-                Save Changes
-              </button>
-            ) : (
-              <button
-                onClick={() => setIsEdit(true)}
-                className="border border-blue-600 text-blue-600 px-6 py-2 rounded-full hover:bg-blue-100 transition"
-              >
-                Edit Profile
-              </button>
-            )
-          }
+              {item.cancelled ? (
+                <p className="text-red-500 text-xs font-semibold">Cancelled</p>
+              ) : item.isCompleted ? (
+                <p className="text-green-600 text-xs font-semibold">Completed</p>
+              ) : (
+                <div className="flex gap-2">
+                  <img
+                    onClick={() => cancelAppointment(item._id)}
+                    className="w-9 cursor-pointer hover:scale-110 transition"
+                    src={assets.cancel_icon}
+                    alt="Cancel"
+                  />
+                  <img
+                    onClick={() => completeAppointment(item._id)}
+                    className="w-9 cursor-pointer hover:scale-110 transition"
+                    src={assets.tick_icon}
+                    alt="Complete"
+                  />
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default DoctorProfile;
+export default DoctorDashboard
